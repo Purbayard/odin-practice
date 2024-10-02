@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock paper scissors</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div class="flex h-screen">
+        <div class="flex flex-col items-center justify-center w-1/2">
+            <div class="flex items-center justify-center w-full h-1/2" id="humanSelection">
+                <i class="fa-solid fa-hand-back-fist fa-10x"></i>
+            </div>
+            <div class="flex items-center justify-center w-full gap-10 h-1/2">
+                <button type="button" id="paper"
+                    class="text-2xl text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5">
+                    <i class="fa-solid fa-hand"></i>
+                </button>
+                <button type="button" id="rock"
+                    class="text-2xl text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5">
+                    <i class="fa-solid fa-hand-back-fist"></i>
+                </button>
+                <button type="button" id="scissors"
+                    class="text-2xl text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5">
+                    <i class="fa-solid fa-hand-scissors"></i>
+                </button>
+            </div>
+        </div>
+        <div class="w-1/2">
+            <div class="flex items-center justify-center w-full h-1/2" id="computerSelection">
+                <i class="fa-solid fa-hand-back-fist fa-10x"></i>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    const getComputerChoice = () => {
+        const choices = ['rock', 'paper', 'scissors'];
+        return choices[Math.floor(Math.random() * choices.length)];
+    }
+
+    const playRound = (humanChoice, computerChoice) => {
+        if (humanChoice === computerChoice) {
+            console.log("Seri!");
+        } else if ((humanChoice === 'rock' && computerChoice === 'scissors') ||
+            (humanChoice === 'scissors' && computerChoice === 'paper') ||
+            (humanChoice === 'paper' && computerChoice === 'rock')) {
+            console.log("Anda menang!");
+        } else {
+            console.log("Komputer menang!");
+        }
+    }
+
+    const buttons = document.querySelectorAll('#paper, #rock, #scissors');
+    const humanChoiceElement = document.getElementById('humanSelection');
+    const computerChoiceElement = document.getElementById('computerSelection');
+
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            const humanSelection = button.id;   
+            const computerSelection = getComputerChoice();
+            humanChoiceElement.innerHTML = `<i class="fa-solid fa-hand-${humanSelection} fa-10x"></i>`;
+            computerChoiceElement.innerHTML = `<i class="fa-solid fa-hand-${computerSelection} fa-10x"></i>`;
+            playRound(humanSelection, computerSelection);
+        });
+    });
+</script>
+</html>
